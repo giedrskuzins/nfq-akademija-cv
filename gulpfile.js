@@ -4,6 +4,8 @@ var gulp = require('gulp');
 var connect = require('gulp-connect');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var minify = require('gulp-minify-css');
 
 gulp.task('connect', function() {
     connect.server({
@@ -18,12 +20,15 @@ gulp.task('html', function() {
 gulp.task('sass', function () {
     return gulp.src('./src/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
+        //.pipe(uglify())
+        .pipe(minify())
         .pipe(gulp.dest('./web/assets'));
 });
 
 gulp.task('js', function() {
     return gulp.src('./src/js/**/*.js')
         .pipe(concat('main.js'))
+        .pipe(uglify())
         .pipe(gulp.dest('./web/assets'));
 });
 
